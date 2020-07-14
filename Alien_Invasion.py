@@ -4,7 +4,9 @@ from pygame.sprite import Group
 from setting import settings
 from ship import Ship
 from alien import Alien
+from game_stats import GameStats
 import game_functions as gf
+
 
 def run_game():
     #initialize pygame, settings and screen objects.
@@ -18,6 +20,9 @@ def run_game():
     logo=pygame.image.load(ai_settings.logo)
     
     pygame.display.set_icon(logo)
+
+    #Create an instance to Store game statistics.
+    stats=GameStats(ai_settings)
 
 
     #make a ship, a group of bullets, and a group of aliens.
@@ -41,12 +46,13 @@ def run_game():
         #Function for keyboard and mouse events.
         gf.check_events(ai_settings,screen,ship,bullets)
 
+        
+        if stats.game_active:
         #updating surfaces
-        ship.update()
-        bullets.update()
-
-        gf.update_bullets(aliens,bullets)
-        gf.update_aliens(ai_settings,aliens)
+            ship.update()
+            bullets.update()
+            gf.update_bullets(ai_settings,screen,ship,aliens,bullets)
+            gf.update_aliens(ai_settings,stats,screen,ship,aliens,bullets)
 
         # #get rid of the bullets that have disappeared.
         # for bullet in bullets.copy():

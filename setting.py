@@ -17,16 +17,17 @@ class settings():
 
         #ship settings
         self.ship_speed_factor=3
+        self.ship_limit=3
 
         #bullet settings
-        self.bullet_speed_factor=2
-        self.bullet_width=3
+        self.bullet_speed_factor=4
+        self.bullet_width=1200
         self.bullet_height=15
         self.bullet_color=250,250,250
         self.bullet_allowed=3
 
         #Alien Settings
-        self.alien_speed_factor=1
+        self.alien_speed_factor=3
         self.fleet_drop_speed=10
         #fleet_direction of 1 represents right; -1represents left.
         self.fleet_direction=1
