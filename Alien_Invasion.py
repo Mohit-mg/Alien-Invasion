@@ -3,29 +3,36 @@ from pygame.sprite import Group
 
 from setting import settings
 from ship import Ship
+from alien import Alien
 import game_functions as gf
 
 def run_game():
     #initialize pygame, settings and screen objects.
     pygame.init()
     ai_settings=settings()
-    screen=pygame.display.set_mode((ai_settings.screen_width,ai_settings.screen_hight))
+    screen=pygame.display.set_mode((ai_settings.screen_width,ai_settings.screen_height))
 
 
     #changing title and logo
     pygame.display.set_caption(ai_settings.title)
     logo=pygame.image.load(ai_settings.logo)
+    
     pygame.display.set_icon(logo)
 
 
-    #make a ship.
+    #make a ship, a group of bullets, and a group of aliens.
     ship=Ship(ai_settings,screen)
-    #make a group to store bullets in.
     bullets=Group()
+    aliens=Group()
+
+    # Create the fleet of the aliens.
+    gf.Create_fleet(ai_settings,screen,ship,aliens)
+
+    
 
 
-    # Set the background color.
-    bg_color=(190,200,210)
+    #make an alien.
+    # alien=Alien(ai_settings,screen)
 
 
 
@@ -38,7 +45,8 @@ def run_game():
         ship.update()
         bullets.update()
 
-        gf.update_bullets(bullets)
+        gf.update_bullets(aliens,bullets)
+        gf.update_aliens(ai_settings,aliens)
 
         # #get rid of the bullets that have disappeared.
         # for bullet in bullets.copy():
@@ -47,7 +55,8 @@ def run_game():
         #     print(len(bullets))
 
         #updating game functions
-        gf.update_screen(ai_settings,screen,ship,bullets)
+        # gf.update_screen(ai_settings,screen,ship,bullets)
+        gf.update_screen(ai_settings,screen,ship,aliens,bullets)
 
        
 
